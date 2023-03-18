@@ -1,6 +1,9 @@
 Static {
     border: solid white;
 }
+Button {
+    width: 100%;
+}
 
 #sidebar {
     dock: left;
@@ -12,4 +15,15 @@ Static {
 #text_log {
     height: 30%;
     border: solid white;
+}
+#quit_dialog {
+    grid-size: 2;
+    grid-gutter: 1 2;
+    padding: 1 2;
+}
+#quit_question {
+    column-span: 2;
+    content-align: center bottom;
+    width: 100%;
+    height: 100%;
 }

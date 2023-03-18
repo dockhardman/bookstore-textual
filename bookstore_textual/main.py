@@ -1,6 +1,8 @@
 from textual import events
 from textual.app import App, ComposeResult
-from textual.containers import Container
+from textual.containers import Container, Grid
+from textual.css.query import NoMatches
+from textual.screen import Screen
 from textual.widgets import Button, Header, Footer, Static, TextLog
 
 
@@ -14,13 +16,30 @@ class Body(Static):
         yield Button("Show Book")
 
 
+class QuitScreen(Screen):
+    def compose(self) -> ComposeResult:
+        yield Grid(
+            Static("Are you sure you want to quit?", id="quit_question"),
+            Button("Quit", variant="error", id="quit_button_quit"),
+            Button("Cancel", variant="primary", id="quit_button_cancel"),
+            id="quit_dialog",
+        )
+
+    def on_button_pressed(self, event: Button.Pressed) -> None:
+        if event.button.id == "quit_button_quit":
+            self.app.exit()
+        else:
+            self.app.pop_screen()
+
+
 class BookstoreApp(App):
     """A Textual app to manage Books."""
 
     CSS_PATH = "app.css"
     BINDINGS = [
         ("d", "toggle_dark", "Toggle dark mode"),
-        ("l", "toggle_log", "Toggle log widget"),
+        ("j", "toggle_log", "Toggle log widget"),
+        ("q", "request_quit", "Quit"),
     ]
 
     def compose(self) -> ComposeResult:
@@ -35,8 +54,12 @@ class BookstoreApp(App):
 
     def on_key(self, event: events.Key) -> None:
         """Write Key events to log."""
-        text_log = self.query_one(TextLog)
-        text_log.write(f"Key Event: {event}")
+
+        try:
+            text_log = self.query_one(TextLog)
+            text_log.write(f"Key Event: {event}")
+        except NoMatches:
+            pass
 
     def action_toggle_dark(self) -> None:
         """An action to toggle dark mode."""
@@ -51,6 +74,12 @@ class BookstoreApp(App):
             text_log.styles.display = "none"
         elif text_log.styles.display == "none":
             text_log.styles.display = "block"
+
+    def action_request_quit(self) -> None:
+        """An action to quit the app."""
+
+        quit_screen = QuitScreen()
+        self.push_screen(quit_screen)
 
 
 def run():
