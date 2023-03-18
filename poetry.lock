@@ -1032,14 +1032,14 @@ files = [
 
 [[package]]
 name = "textual"
-version = "0.15.1"
+version = "0.11.1"
 description = "Modern Text User Interface framework"
 category = "main"
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "textual-0.15.1-py3-none-any.whl", hash = "sha256:be79dd8d7f3f5b5c40893da4d5d8228e54c5c9f7b844abfb0e8a13ce2b3a7930"},
-    {file = "textual-0.15.1.tar.gz", hash = "sha256:b86d4668a072fc85092f081e157e1e7575b353b2f6b728755752bbbe23123063"},
+    {file = "textual-0.11.1-py3-none-any.whl", hash = "sha256:77afbb64caa136fdc568ee43601fd5a1a94f13bb7e057c95dc8ee5dfa3f3083b"},
+    {file = "textual-0.11.1.tar.gz", hash = "sha256:9b027853b686ac9561a3dc6f2b637a25089f2ee67a9e37bbf39d0da7567694b0"},
 ]
 
 [package.dependencies]
@@ -1050,10 +1050,26 @@ markdown-it-py = {version = ">=2.1.0,<3.0.0", extras = ["linkify", "plugins"]}
 mkdocs-exclude = ">=1.0.2,<2.0.0"
 msgpack = {version = ">=1.0.3", optional = true, markers = "extra == \"dev\""}
 rich = ">12.6.0"
-typing-extensions = ">=4.4.0,<5.0.0"
+typing-extensions = ">=4.0.0,<5.0.0"
 
 [package.extras]
 dev = ["aiohttp (>=3.8.1)", "click (>=8.1.2)", "msgpack (>=1.0.3)"]
+
+[[package]]
+name = "textual-autocomplete"
+version = "2.0.1b0"
+description = "Easily add autocomplete dropdowns to your Textual apps."
+category = "main"
+optional = false
+python-versions = ">=3.7.8,<4.0.0"
+files = [
+    {file = "textual_autocomplete-2.0.1b0-py3-none-any.whl", hash = "sha256:b9cc0dbc23e925b9f4494595ce6bce010848d4f8af80a82948e3110100f58d90"},
+    {file = "textual_autocomplete-2.0.1b0.tar.gz", hash = "sha256:50ee97818646af9a6a1897b749c5dd04cd1e388a62c8869c646e1b2b81a10ccf"},
+]
+
+[package.dependencies]
+textual = ">=0.11.0,<0.12.0"
+typing-extensions = ">=4.5.0,<5.0.0"
 
 [[package]]
 name = "tomli"
@@ -1242,4 +1258,4 @@ testing = ["big-O", "flake8 (<5)", "jaraco.functools", "jaraco.itertools", "more
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.8.0,<4.0.0"
-content-hash = "ebc048b3b4878b431cbf761ffb3c037e6f9378c361ae541ec3d2645d4e274fa7"
+content-hash = "5a0007bf7ec5d8f57c9f487894eec9710ad0a83b3cc4a10d86609557e2528ee5"

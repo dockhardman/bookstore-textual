@@ -46,9 +46,11 @@ class BookstoreApp(App):
         """Create child widgets for the app."""
 
         yield Header(id="header")
-        with Container(id="app-grid"):
-            yield Sidebar("Book List", id="sidebar")
-            yield Body("Book", id="body")
+        yield Container(
+            Sidebar("Book List", id="sidebar"),
+            Body("Book", id="body"),
+            id="app-grid",
+        )
         yield TextLog(highlight=True, markup=True, id="text_log")
         yield Footer()
 
