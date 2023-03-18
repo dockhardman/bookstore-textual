@@ -1,6 +1,6 @@
 from textual import events
 from textual.app import App, ComposeResult
-from textual.containers import Container, Horizontal, Vertical
+from textual.containers import Container
 from textual.widgets import Button, Header, Footer, Static, TextLog
 
 
@@ -36,7 +36,7 @@ class BookstoreApp(App):
     def on_key(self, event: events.Key) -> None:
         """Write Key events to log."""
         text_log = self.query_one(TextLog)
-        text_log.write(event)
+        text_log.write(f"Key Event: {event}")
 
     def action_toggle_dark(self) -> None:
         """An action to toggle dark mode."""
