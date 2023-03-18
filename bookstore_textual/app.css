@@ -19,6 +19,7 @@ Button {
 #text_log {
     height: 30%;
     border: solid white;
+    display: none;
 }
 #login_dialog {
     align: center middle;
