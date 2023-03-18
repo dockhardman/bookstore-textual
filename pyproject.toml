@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "bookstore-textual"
+version = "0.1.0"
+description = ""
+authors = ["Allen Chou <f1470891079@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "bookstore_textual"}]
+
+[tool.poetry.dependencies]
+python = ">=3.8.0,<4.0.0"
+rich = "*"
+pytz = "*"
+textual = {version = "0.*", extras = ["dev"]}
+
+
+[tool.poetry.group.dev.dependencies]
+black = "*"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
