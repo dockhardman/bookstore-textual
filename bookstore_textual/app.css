@@ -1,6 +1,9 @@
 Static {
     border: solid white;
 }
+Screen {
+    border: solid white;
+}
 Button {
     width: 100%;
 }
@@ -11,10 +14,27 @@ Button {
     height: 100%;
 }
 #body {
+    height: 100%;
 }
 #text_log {
     height: 30%;
     border: solid white;
+}
+#login_dialog {
+    align: center middle;
+    width: 80%;
+    margin: 1;
+    grid-size: 2;
+    grid-gutter: 2;
+    padding: 1 2;
+}
+#login_label_username {
+    align: right middle;
+    content-align: right middle;
+}
+#login_label_password {
+    align: right middle;
+    content-align: right middle;
 }
 #quit_dialog {
     grid-size: 2;
