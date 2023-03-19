@@ -4,10 +4,22 @@ from textual.containers import Container, Grid
 from textual.css.query import NoMatches
 from textual.screen import Screen
 from textual.widgets import Button, Footer, Header, Input, Label, Static, TextLog
+from textual_autocomplete import AutoComplete, Dropdown, DropdownItem
+
+from bookstore_textual.config import settings
 
 
 class Sidebar(Static):
     def compose(self) -> ComposeResult:
+        yield AutoComplete(
+            Input(placeholder="Search bookstore..."),
+            Dropdown(
+                items=[
+                    DropdownItem(bookstore_name)
+                    for bookstore_name in settings.bookstore_list.get()
+                ]
+            ),
+        )
         yield Button("Add Book")
 
 
