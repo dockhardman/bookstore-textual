@@ -1,11 +1,11 @@
-from textual import events
+from textual import events, log
 from textual.app import App, ComposeResult
 from textual.containers import Container
-from textual.css.query import NoMatches
 from textual.widgets import Footer, Header, TextLog
 
 from bookstore_textual.config import settings
 from bookstore_textual.widgets import Body, LoginScreen, QuitScreen, Sidebar
+from bookstore_textual.utils.log import get_text_log
 
 
 class BookstoreApp(App):
@@ -34,11 +34,9 @@ class BookstoreApp(App):
     def on_key(self, event: events.Key) -> None:
         """Write Key events to log."""
 
-        try:
-            text_log = self.query_one(TextLog)
-            text_log.write(f"Key Event: {event}")
-        except NoMatches:
-            pass
+        log.info(f"Key Event: {event}")
+        text_log = get_text_log(self)
+        text_log.write(f"Key Event: {event}")
 
     def action_toggle_dark(self) -> None:
         """An action to toggle dark mode."""
