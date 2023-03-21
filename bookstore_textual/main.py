@@ -1,78 +1,17 @@
 from textual import events
 from textual.app import App, ComposeResult
-from textual.containers import Container, Grid
+from textual.containers import Container
 from textual.css.query import NoMatches
-from textual.screen import Screen
-from textual.widgets import Button, Footer, Header, Input, Label, Static, TextLog
-from textual_autocomplete import AutoComplete, Dropdown, DropdownItem
+from textual.widgets import Footer, Header, TextLog
 
 from bookstore_textual.config import settings
-
-
-class Sidebar(Static):
-    def compose(self) -> ComposeResult:
-        yield AutoComplete(
-            Input(placeholder="Search bookstore..."),
-            Dropdown(
-                items=[
-                    DropdownItem(bookstore_name)
-                    for bookstore_name in settings.bookstore_list.get()
-                ]
-            ),
-        )
-        yield Button("Add Book")
-
-
-class Body(Static):
-    def compose(self) -> ComposeResult:
-        yield Button("Show Book")
-
-
-class LoginScreen(Screen):
-    BINDINGS = [("l", "login", "Login")]
-
-    def compose(self) -> ComposeResult:
-        yield Grid(
-            Label("Username", id="login_label_username", expand=True),
-            Input(),
-            Label("Password", id="login_label_password", expand=True),
-            Input(),
-            id="login_dialog",
-        )
-
-    def action_login(self) -> None:
-        """An action to login."""
-
-        self.app.pop_screen()
-
-
-class QuitScreen(Screen):
-    BINDINGS = [("q", "request_quit", "Quit")]
-
-    def compose(self) -> ComposeResult:
-        yield Grid(
-            Static("Are you sure you want to quit?", id="quit_question"),
-            Button("Quit", variant="error", id="quit_button_quit"),
-            Button("Cancel", variant="primary", id="quit_button_cancel"),
-            id="quit_dialog",
-        )
-
-    def on_button_pressed(self, event: Button.Pressed) -> None:
-        if event.button.id == "quit_button_quit":
-            self.app.exit()
-        else:
-            self.app.pop_screen()
-
-    def action_request_quit(self) -> None:
-        """An action to quit the app."""
-
-        self.app.pop_screen()
+from bookstore_textual.widgets import Body, LoginScreen, QuitScreen, Sidebar
 
 
 class BookstoreApp(App):
     """A Textual app to manage Books."""
 
-    CSS_PATH = "app.css"
+    CSS_PATH = settings.CSS_PATH
     BINDINGS = [
         ("d", "toggle_dark", "Toggle dark mode"),
         ("j", "toggle_log", "Toggle log widget"),
@@ -83,7 +22,7 @@ class BookstoreApp(App):
     def compose(self) -> ComposeResult:
         """Create child widgets for the app."""
 
-        yield Header(id="header")
+        yield Header(id="header", show_clock=True)
         yield Container(
             Sidebar("Book List", id="sidebar"),
             Body("Book", id="body"),
