@@ -7,10 +7,18 @@ if TYPE_CHECKING:
     from textual.dom import DOMNode
 
 
+def get_textual_app(node: "DOMNode") -> "App":
+    """Get main application."""
+
+    app: "App" = node.ancestors_with_self[-1]
+
+    return app
+
+
 def get_text_log(node: "DOMNode", id: Optional[Text] = None) -> "TextLog":
     """Get main application TextLog."""
 
-    app: App = node.ancestors_with_self[-1]
+    app = get_textual_app(node=node)
 
     if id:
         text_log = app.query_one(f"#{id}")

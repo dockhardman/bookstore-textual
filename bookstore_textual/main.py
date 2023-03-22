@@ -1,11 +1,12 @@
 from textual import events, log
 from textual.app import App, ComposeResult
 from textual.containers import Container
+from textual.reactive import reactive
 from textual.widgets import Footer, Header, TextLog
 
 from bookstore_textual.config import settings
 from bookstore_textual.widgets import Body, LoginScreen, QuitScreen, Sidebar
-from bookstore_textual.utils.log import get_text_log
+from bookstore_textual.utils.textual import get_text_log
 
 
 class BookstoreApp(App):
@@ -18,6 +19,9 @@ class BookstoreApp(App):
         ("l", "login", "Login"),
         ("q", "request_quit", "Quit"),
     ]
+
+    current_bookstore = reactive("")
+    current_books = reactive([])
 
     def compose(self) -> ComposeResult:
         """Create child widgets for the app."""
