@@ -8,7 +8,7 @@ from bookstore_textual.schemas import Book, BookTuple
 from contextlib import _GeneratorContextManager
 
 
-class BookAPI(object):
+class BookAPI:
 
     book_tb_name = settings.book_db_name
     book_schema = """(
@@ -24,7 +24,7 @@ class BookAPI(object):
         self,
         bookstore_database_url: Text = settings.bookstore_database_url,
         database_context: Callable[
-            ..., _GeneratorContextManager[sqlite3.Cursor]
+            ..., "_GeneratorContextManager[sqlite3.Cursor]"
         ] = context_book_db,
     ) -> None:
         self.bookstore_database_url = bookstore_database_url
@@ -112,15 +112,18 @@ class BookAPI(object):
         return books
 
 
+book_api = BookAPI()
+
+
 if __name__ == "__main__":
     from pathlib import Path
 
     db_url = settings.bookstore_database_url + ".test"
     Path(db_url).unlink(missing_ok=True)
 
-    book_api = BookAPI(bookstore_database_url=db_url)
-    book_api.create_db()
-    book_api.create_book(
+    test_book_api = BookAPI(bookstore_database_url=db_url)
+    test_book_api.create_db()
+    test_book_api.create_book(
         [
             Book(
                 name="Book 1",
@@ -138,7 +141,7 @@ if __name__ == "__main__":
             ),
         ]
     )
-    assert len(book_api.get_book()) == 2
-    assert len(book_api.get_book(bookstore="Central Park Bookstore")) == 2
-    assert len(book_api.get_book(book_id=1)) == 1
-    assert len(book_api.get_book(bookstore="Unknown Bookstore")) == 0
+    assert len(test_book_api.get_book()) == 2
+    assert len(test_book_api.get_book(bookstore="Central Park Bookstore")) == 2
+    assert len(test_book_api.get_book(book_id=1)) == 1
+    assert len(test_book_api.get_book(bookstore="Unknown Bookstore")) == 0
