@@ -2,9 +2,9 @@ from textual import log
 from textual_autocomplete import AutoComplete, Dropdown, DropdownItem
 from textual.app import ComposeResult
 from textual.widgets import Button, Input, Label, ListView, ListItem, Static
-
 from bookstore_textual.api.book_api import book_api
 from bookstore_textual.config import settings
+from bookstore_textual.schemas import Book
 from bookstore_textual.utils.textual import get_text_log, get_textual_app
 
 
@@ -34,7 +34,20 @@ class BookstoreInput(Input):
                 break
         book_list_view.clear()
         for book in books:
-            book_list_view.append(ListItem(Label(book["name"])))
+            book_list_view.append(BookListItem(Label(book["name"]), book=book))
+
+
+class BookListView(ListView):
+    def on_list_view_selected(self, message: "ListView.Selected"):
+        selected_item: "BookListItem" = message.item
+        text_log = get_text_log(self)
+        text_log.write(f"Item: {selected_item.book}")
+
+
+class BookListItem(ListItem):
+    def __init__(self, *args, book: Book, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.book = book
 
 
 class Sidebar(Static):
@@ -48,5 +61,5 @@ class Sidebar(Static):
                 ]
             ),
         )
-        yield ListView(id="book_list_view")
+        yield BookListView(id="book_list_view")
         yield Button("Add Book")
