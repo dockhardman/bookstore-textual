@@ -1,5 +1,6 @@
+from rich.syntax import Syntax
 from textual import log
-from textual.app import ComposeResult
+from textual.app import App, ComposeResult
 from textual.widgets import Button, Input, Label, ListView, ListItem, Static
 from bookstore_textual.api.book_api import book_api
 from bookstore_textual.config import settings
@@ -39,8 +40,24 @@ class BookstoreInput(Input):
 class BookListView(ListView):
     def on_list_view_selected(self, message: "ListView.Selected"):
         selected_item: "BookListItem" = message.item
+        book: Book = selected_item.book
+
         text_log = get_text_log(self)
-        text_log.write(f"Item: {selected_item.book}")
+        text_log.write(f"Select book: {book}")
+
+        app: "App" = get_textual_app(self)
+        book_content = app.query_one("#book_content", Static)
+
+        app.sub_title = f"{book['name']} ({book['id']})"
+        syntax = Syntax(
+            book["content"],
+            lexer="python",
+            line_numbers=True,
+            word_wrap=False,
+            indent_guides=True,
+            theme="github-dark",
+        )
+        book_content.update(syntax)
 
 
 class BookListItem(ListItem):

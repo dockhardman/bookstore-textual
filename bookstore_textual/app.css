@@ -2,7 +2,7 @@ Static {
     border: solid white;
 }
 Screen {
-    border: solid white;
+    /* border: solid white; */
 }
 Button {
     width: 100%;
@@ -46,5 +46,11 @@ Button {
     column-span: 2;
     content-align: center bottom;
     width: 100%;
+    height: 100%;
+}
+#book_content_container {
+    height: 80%;
+}
+#book_content {
     height: 100%;
 }
