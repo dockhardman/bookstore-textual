@@ -1,5 +1,4 @@
 from textual import log
-from textual_autocomplete import AutoComplete, Dropdown, DropdownItem
 from textual.app import ComposeResult
 from textual.widgets import Button, Input, Label, ListView, ListItem, Static
 from bookstore_textual.api.book_api import book_api
@@ -52,14 +51,10 @@ class BookListItem(ListItem):
 
 class Sidebar(Static):
     def compose(self) -> ComposeResult:
-        yield AutoComplete(
-            BookstoreInput(placeholder="Search bookstore...", id="bookstore_input"),
-            Dropdown(
-                items=[
-                    DropdownItem(bookstore_name)
-                    for bookstore_name in settings.bookstore_list.get()
-                ]
-            ),
+        yield BookstoreInput(
+            settings.bookstore_list.get()[0],
+            placeholder="Search bookstore...",
+            id="bookstore_input",
         )
         yield BookListView(id="book_list_view")
         yield Button("Add Book")

@@ -9,7 +9,6 @@ from contextlib import _GeneratorContextManager
 
 
 class BookAPI:
-
     book_tb_name = settings.book_db_name
     book_schema = """(
         ID             INTEGER          PRIMARY KEY,
